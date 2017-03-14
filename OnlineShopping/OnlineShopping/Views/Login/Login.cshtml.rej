@@ -1,0 +1,12 @@
+diff a/OnlineShopping/OnlineShopping/Views/Login/Login.cshtml b/OnlineShopping/OnlineShopping/Views/Login/Login.cshtml	(rejected hunks)
+@@ -27,10 +27,6 @@
+             sely.style.borderColor = "#A4A4A4";
+         }
+ 
+-        if (ckCheck.checked == "true") {
+-            ckCheck.style.borderColor = "#A4A4A4";
+-            return false
+-        }
+ 
+         if (opt.value == "0") {
+             sel.style.borderColor = "#FF0000";

@@ -57,5 +57,14 @@ namespace Model.DAL
             bool result = DataProvider.ExecuteNonQuery(sql, CommandType.Text, quantityParam, emailParam, productIdParam);
             return result;
         }
+
+        public bool deleteRecord(int productId, string email)
+        {
+            string sql = "DELETE FROM Product_Cart WHERE Product_ID = @productId AND Email = @email";
+            SqlParameter productIdParam = new SqlParameter("@productId", productId);
+            SqlParameter emailParam = new SqlParameter("@email", email);
+            bool result = DataProvider.ExecuteNonQuery(sql, CommandType.Text, productIdParam, emailParam);
+            return result;
+        }
     }
 }

@@ -85,6 +85,7 @@ namespace OnlineShopping.Controllers
                 DateTime bd = Convert.ToDateTime(s);
                 DateTime today = DateTime.Today;
                 User_Account u_account = new User_Account { Email = email, Password = password, Full_Name = fullName, Birthday = bd, Gender = gender, Address = address, Cancel_Amount = 0, created_Date = today };
+                User_Account u_account = new User_Account { Email = email, Password= password, Full_Name = fullName,Birthday = bd, Gender= gender,Address = address,  Cancel_Amount = 0, created_Date = today };            
                 accountDal.registerAccount(email, password, fullName, bd, gender, address, today);
                 Session["USER"] = u_account;
                 Session["DATE"] = bDate;
@@ -103,7 +104,7 @@ namespace OnlineShopping.Controllers
         public ActionResult Logout()
         {
             Session.Remove("USER");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Login");
         }
     }
 }

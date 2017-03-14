@@ -18,6 +18,8 @@ img{
 	float:left;
 	position:relative;
 	z-index:1;
+	
+	font-family: 'ambleregular';
 }
 
 .item-detail{
@@ -44,6 +46,7 @@ img{
 .cart-header p{
 	margin-top: 65px;
 	font-weight: bold;
+	color:#189eff;
 }
 .cart-header div{
 	text-align: center;
@@ -112,3 +115,46 @@ img{
 	font-weight: bold;
 	font-size: 18pt;
 }
+
+.item-conclusion{
+	width: 100%;
+	height: 100px;
+	border-bottom: 1px solid #CECECE;	
+	position:relative;	
+}
+.item-conclusion div p{
+	margin-top: 45px;
+	text-align: center;
+	
+}
+.item-conclusion div{
+	text-align: left;
+	display: block;
+}
+
+.item-conclusion button{
+	margin-top: 35px;
+	height: 35px;
+	padding-top: 11px;
+}
+.item-conclusion div{
+	color: red;
+	font-weight: bold;
+	font-size: 18pt;
+}
+.item-conclusion  div.item-quantity{
+	width: 10%;
+}
+.item-conclusion  div.item-total-price{	
+	width: 25%;
+}
+.item-conclusion  div.item-total-price p{	
+	margin-top: 40px;
+}
+.item-conclusion div.item-delete button{
+	background: red;
+}
+.item-conclusion div.item-image button{
+	background: green;
+}
+button{ font-family: 'ambleregular';}

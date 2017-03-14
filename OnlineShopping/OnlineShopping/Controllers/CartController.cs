@@ -17,8 +17,6 @@ namespace OnlineShopping.Controllers
             return View();
         }
 
-
-
         public ActionResult Add(FormCollection f)
         {
             if (Session["USER"] != null)
@@ -38,7 +36,7 @@ namespace OnlineShopping.Controllers
                 bool isContain = false;
                 foreach (var item in productCarts)
                 {
-                 if(item.Product_ID == productId)
+                    if (item.Product_ID == productId)
                     {
                         isContain = true;
                         item.Quantity += quantity;
@@ -49,7 +47,7 @@ namespace OnlineShopping.Controllers
 
                 if (!isContain)
                 {
-                    
+
                     Product product = productDal.getProductById(productId);
                     Product_Cart productCart = new Product_Cart()
                     {
@@ -105,11 +103,46 @@ namespace OnlineShopping.Controllers
                 Session["CART"] = myCart;
             }
             return RedirectToAction("ViewCart", "Cart");
-        }    
+        }
 
         public ActionResult Delete(FormCollection f)
         {
-            return View();
+            string productIdStr = f["productId"];
+            int productId;
+            if (int.TryParse(productIdStr, out productId))
+            {
+                if (Session["USER"] != null)
+                {
+                    User_Account userAccount = (User_Account)Session["USER"];
+                    ICollection<Product_Cart> productCarts = userAccount.Product_Cart;
+
+                    Product_CartDAL productCartDal = new Product_CartDAL();
+                    productCartDal.deleteRecord(productId, userAccount.Email);
+
+                    foreach (Product_Cart item in productCarts)
+                    {
+                        if(item.Product_ID == productId)
+                        {
+                            productCarts.Remove(item);
+                            break;
+                        }
+                    }
+                }
+                else if (Session["CART"] != null)
+                {
+                    List<Product_Cart> myCart = (List<Product_Cart>)Session["CART"];
+                    foreach (Product_Cart item in myCart)
+                    {
+                        if(item.Product_ID == productId)
+                        {
+                            myCart.Remove(item);
+                            break;
+                        }
+                    }
+                }
+
+            }
+            return RedirectToAction("ViewCart", "Cart");
         }
     }
 }
