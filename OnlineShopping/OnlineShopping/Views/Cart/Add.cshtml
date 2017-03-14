@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "ViewCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/MyTemplate/css/cart.css" rel="stylesheet" type="text/css" media="all" />
+
+</div>
+
+@using Model.Models;
+@{
+    Dictionary<Product, int> cartItems = (Dictionary<Product, int>)Session["CART"];    
+}
+
+<div class="cart-content">
+    <div class="cart-items">
+        @*list items header*@
+        <div class="item-detail cart-header">
+            <div class="item-name">
+                <p>
+                    Your Cart (10 Products)
+                </p>
+            </div>
+            <div class="item-price">
+                <p>
+                    Price
+                </p>
+            </div>
+            <div class="item-quantity">
+                <p>
+                    Quantity
+                </p>
+            </div>
+        </div>
+        @*begin list items*@
+        @if ((cartItems == null) || (cartItems.Count == 0))
+        {
+            <p>Your cart have no items</p>
+        }
+        else
+        {
+            foreach (KeyValuePair<Product, int> item in cartItems)
+            {
+                <div class="item-detail">
+                    <div class="item-image">
+                        <img src="@Url.Content(item.Key.Title_Image)" height="100%" />
+                    </div>
+                    <div class="item-name">
+                        <p>
+                            @item.Key.Product_Name
+                        </p>
+                    </div>
+                    <div class="item-price">
+                        <p>
+                            @item.Key.Price
+                        </p>
+                    </div>
+                    <div class="item-quantity">
+                        <p>
+
+                        </p>
+                    </div>
+                </div>
+            }
+        }
+
+        @*begin list items*@
+    </div>
+    <div class="checkout-cart">
+
+    </div>
+
+</div>

@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Model.Models;
+@using Model.DAL;
+@{
+    List<Product_Cart> cartItems = (List<Product_Cart>)Session["CART"];
+    User_Account userAccount = (User_Account)Session["USER"];
+    if (userAccount != null)
+    {
+        cartItems = userAccount.Product_Cart.ToList<Product_Cart>();
+    }
+    float totalPrice = 0;
+}
+</div>
+<div class="parent-login-register">
+    <div class="content div-login">
+        <div class="container">
+            <div class="myImage">
+                <p class="login">Your&nbsp;&nbsp;shipping&nbsp;&nbsp;address</p>
+            </div>
+            <br />
+            <br />
+            <div class="info">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label><b>Name</b></label>
+                            </td>
+                            <td>
+                                <input type="text" oninvalid="setCustomValidity('Please input Name!!!')"
+                                       onchange="try { setCustomValidity('') } catch (e) { }" placeholder="Enter Name" required class="inputTextPass" name="txtName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label><b>Address</b></label>
+                            </td>
+                            <td>
+                                <input type="text" oninvalid="setCustomValidity('Please input Name!!!')"
+                                       onchange="try { setCustomValidity('') } catch (e) { }" placeholder="Enter Address" required class="inputTextPass" name="txtAddress">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label><b>Province</b></label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label><b>District</b></label>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label><b>Town</b></label>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <div id="divLogin">
+                    <button type="submit" class="btnRe">CONTINUE</button><br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content div-register">
+        <div class="container">
+            <div class="myImage">
+                <p class="login">Your&nbsp;&nbsp;Cart</p>
+            </div>
+            <br />
+            <br />
+            <div class="info">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="myTd" >No.</td>
+                            <td class="myTd">Your&nbsp;Cart&nbsp;</td>
+                            <td class="myTd">Price&nbsp;Per&nbsp;Unit</td>
+                            <td class="myTd">Quantity</td>
+                            <td class="myTd">Price</td>
+                        </tr>
+                        @foreach (Product_Cart item in cartItems)
+                        {
+                            <tr>
+                                <td class="myTdImg">
+                                    <div class="img-div"><img src="@Url.Content(item.Product.Title_Image)" /></div>
+                                </td>
+                                <td class="myTd1">
+                                    @item.Product.Product_Name
+                                </td>
+                                <td class="myTd">
+                                    @item.Product.Price
+                                </td>
+                                <td class="myTd">
+                                    @item.Quantity
+                                </td>
+                                <td class="myTd">
+                                    @(item.Quantity * item.Product.Price)
+                                    @{ totalPrice += (float)(item.Quantity * item.Product.Price);}
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
