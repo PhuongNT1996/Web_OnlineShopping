@@ -43,6 +43,7 @@ namespace Model.DAL
 
                 result.Add(productCart);
             }
+            reader.Close();
             return result;
         }
 
@@ -66,5 +67,7 @@ namespace Model.DAL
             bool result = DataProvider.ExecuteNonQuery(sql, CommandType.Text, productIdParam, emailParam);
             return result;
         }
+
+
     }
 }

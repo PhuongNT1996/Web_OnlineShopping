@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Congratulation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+</div>
+@using (Html.BeginForm("Index", "Home"))
+{
+<div class="content">
+    <div class="container">
+        <div class="page-header">
+            <div class="myImage">
+                <div class="myImage"><img src="~/Content/MyTemplate/images/login.PNG" /></div>
+                <h2>Congratulations! You will receive your order in 3-6 days</h2><br />
+            </div>
+            <hr />
+            <div class="info">
+                <p><b>Cash on Delivery</b></p>
+                <p>1.Lazada.vn will not send you SMS confirmation. In case you need to review order’s details, kindly check email confirmation that we sent to you.</p>
+                <p>2.You can track your order at www.lazada.vn/order-tracking/</p>
+                <p>3.You can see more details at www.lazada.vn/helpcenter/</p>
+                <p>
+                    4. For all deliveries you will receive a personal invoice based on your account information when shopping at Lazada. To request a red invoice for taxation, please contact us our hotline at 19001007 or send details<br />
+                    (company name, company address, tax identification number) to www.lazada.vn/contact/ within 7 days since purchase date. After this period, Lazada will not support to adjust from personal invoice to red invoice.<br />
+                    Notes: Your order can be delivered in several times when products are sold by different merchants.
+                </p>
+                <div id="divLogin">
+                    <button type="submit">Continue Shopping</button><br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}

@@ -28,14 +28,14 @@ namespace Model.DAL
             return dsProvince;
         }
         //-------------------------------------------------------
-        public DataSet getAllTown(int provinceId)
+        public DataSet getAllTown(int districtId)
         {
             DataSet dsTown = new DataSet();
-            string SQL = "SELECT * FROM Town WHERE Province_ID=@Province_ID";
+            string SQL = "SELECT * FROM Town WHERE District_ID=@District_ID";
             try
             {
-                SqlParameter provinceID = new SqlParameter("@Province_ID", provinceId);
-                dsTown = DataProvider.ExecuteQueryWithDataSet(SQL, CommandType.Text, provinceID);
+                SqlParameter districtID = new SqlParameter("@District_ID", districtId);
+                dsTown = DataProvider.ExecuteQueryWithDataSet(SQL, CommandType.Text, districtID);
             }
             catch (SqlException se)
             {
@@ -44,14 +44,14 @@ namespace Model.DAL
             return dsTown;
         }
         //-------------------------------------------------------------
-        public DataSet getAllDistrict(int dictrictId)
+        public DataSet getAllDistrict(int provinceId)
         {
             DataSet dsDistrict = new DataSet();
-            string SQL = "SELECT * FROM District WHERE District_ID=@District_ID";
+            string SQL = "SELECT * FROM District WHERE Province_ID=@Province_ID";
             try
             {
-                SqlParameter dictrictID = new SqlParameter("@District_ID", dictrictId);
-                dsDistrict = DataProvider.ExecuteQueryWithDataSet(SQL, CommandType.Text, dictrictID);
+                SqlParameter provinceID = new SqlParameter("@Province_ID", provinceId);
+                dsDistrict = DataProvider.ExecuteQueryWithDataSet(SQL, CommandType.Text, provinceID);
             }
             catch (SqlException se)
             {

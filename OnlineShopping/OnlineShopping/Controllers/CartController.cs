@@ -151,5 +151,50 @@ namespace OnlineShopping.Controllers
             }
             return RedirectToAction("ViewCart", "Cart");
         }
+
+        public ActionResult Checkout(FormCollection f)
+        {
+            User_Account userAccount = (User_Account)Session["USER"];
+            DateTime today = DateTime.Today;
+            string email = userAccount.Email;
+            string name = f["txtName"];
+            string address = f["txtAddress"];
+            string province = f["province"];
+            string district = f["district"];
+            string town = f["town"];
+            string orderPhone = f["txtNumber"];
+            Order_Details order = new Order_Details
+            {
+                Email = email,
+                Ordered_Date = today,
+                Delivered = false,
+                Cancelled_Order = false,
+                Reason_Cancel = "",
+                Order_Name = name,
+                Exact_Address = address,
+                Order_Phone = orderPhone,
+                Province_ID = Int32.Parse(province),
+                District_ID = Int32.Parse(district),
+                Town_ID = Int32.Parse(town)
+            };
+            OrderDetailsDAL dal = new OrderDetailsDAL();
+            bool r = dal.addOrder(order);
+            if(r == true)
+            {
+                Product_CartDAL dalCart = new Product_CartDAL();
+                List<Product_Cart> cartItems = dalCart.getProductCartsByEmail(email);
+                int length = cartItems.Count;             
+                for(int i = 0; i < length; i++)
+                {
+                    dalCart.deleteRecord(cartItems[i].Product_ID, cartItems[i].Email);
+                }
+                ICollection<Product_Cart> productCarts = userAccount.Product_Cart;
+                productCarts.Clear();
+                Session.Remove("CART");
+                return RedirectToAction("Index", "Congratulate");
+            }
+        
+            return View();
+        }
     }
 }

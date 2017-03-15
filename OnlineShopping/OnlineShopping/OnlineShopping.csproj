@@ -120,6 +120,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CongratulateController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -159,6 +160,8 @@
     <Content Include="Views\Cart\Add.cshtml" />
     <Content Include="Views\UpdateAccount\Update.cshtml" />
     <Content Include="Views\Province\index.cshtml" />
+    <Content Include="Views\Congratulate\Congratulation.cshtml" />
+    <Content Include="Views\Congratulate\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
