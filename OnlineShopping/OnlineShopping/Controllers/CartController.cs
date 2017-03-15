@@ -19,18 +19,25 @@ namespace OnlineShopping.Controllers
 
         public ActionResult Add(FormCollection f)
         {
+            string quantityStr = f["myNumber"];
+            Int32 quantity = Convert.ToInt32(quantityStr);
+
+            string productIdStr = f["productId"];
+            int productId = int.Parse(productIdStr);
+
+            ProductDAL productDal = new ProductDAL();
+            Product product = productDal.getProductById(productId);
+
+            if(quantity > product.Products_Available)
+            {
+                Session["ADD_ERROR"] = "This product has only " + product.Products_Available + " items";
+                return RedirectToAction("ProductDetails", "Product", new { productIDStr = @product.Product_ID + "" });
+            }
+
             if (Session["USER"] != null)
             {
-                ProductDAL productDal = new ProductDAL();
                 User_Account userAccount = (User_Account)Session["USER"];
                 ICollection<Product_Cart> productCarts = userAccount.Product_Cart;
-
-                string quantityStr = f["myNumber"];
-                Int32 quantity = Convert.ToInt32(quantityStr);
-
-                string productIdStr = f["productId"];
-                int productId = int.Parse(productIdStr);
-
                 Product_CartDAL productCartDal = new Product_CartDAL();
 
                 bool isContain = false;
@@ -39,6 +46,11 @@ namespace OnlineShopping.Controllers
                     if (item.Product_ID == productId)
                     {
                         isContain = true;
+                        if(item.Quantity + quantity > product.Products_Available)
+                        {
+                            Session["ADD_ERROR"] = "This product has only " + (product.Products_Available - item.Quantity) + " items";
+                            return RedirectToAction("ProductDetails", "Product", new { productIDStr = @product.Product_ID + "" });
+                        }
                         item.Quantity += quantity;
                         productCartDal.updateQuantity(item);
                         break;
@@ -47,8 +59,6 @@ namespace OnlineShopping.Controllers
 
                 if (!isContain)
                 {
-
-                    Product product = productDal.getProductById(productId);
                     Product_Cart productCart = new Product_Cart()
                     {
                         Email = userAccount.Email,
@@ -67,10 +77,6 @@ namespace OnlineShopping.Controllers
                 {
                     myCart = (List<Product_Cart>)Session["CART"];
                 }
-                string quantityStr = f["myNumber"];
-                Int32 quantity = Convert.ToInt32(quantityStr);
-
-                string productIdStr = f["productId"];
 
                 Product_Cart productCart = null;
                 foreach (var item in myCart)
@@ -84,14 +90,15 @@ namespace OnlineShopping.Controllers
 
                 if (productCart != null)
                 {
+                    if (productCart.Quantity + quantity > product.Products_Available)
+                    {
+                        Session["ADD_ERROR"] = "This product has only " + (product.Products_Available - productCart.Quantity) + " items";
+                        return RedirectToAction("ProductDetails", "Product", new { productIDStr = @product.Product_ID + "" });
+                    }
                     productCart.Quantity += quantity;
                 }
                 else
                 {
-                    int productId = int.Parse(productIdStr);
-                    ProductDAL productDal = new ProductDAL();
-                    Product product = productDal.getProductById(productId);
-
                     productCart = new Product_Cart()
                     {
                         Quantity = quantity,

@@ -70,5 +70,35 @@ namespace Model.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Promotion> Promotions { get; set; }
+
+        private float realPrice;
+
+        public float RealPrice
+        {
+            get { return getRealPrice(); }
+            set { realPrice = value; }
+        }
+
+        private float getRealPrice()
+        {
+            return (this.Price - (this.Price * this.DiscountPercent / 100));
+        }
+
+        private int discountPercent;
+
+        public int DiscountPercent
+        {
+            get
+            {
+                int discountPercent = 0;
+                foreach (Promotion item in this.Promotions)
+                {
+                    discountPercent += (int)item.Discount_Percent;
+                }
+                return discountPercent;
+            }
+            set { discountPercent = value; }
+        }
+
     }
 }

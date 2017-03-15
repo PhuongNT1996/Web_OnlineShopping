@@ -140,7 +140,9 @@ img{
 .item-conclusion div{
 	color: red;
 	font-weight: bold;
-	font-size: 18pt;
+}
+.item-conclusion div p{
+	font-size: 17pt;
 }
 .item-conclusion  div.item-quantity{
 	width: 10%;

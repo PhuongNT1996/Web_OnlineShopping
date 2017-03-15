@@ -24,7 +24,7 @@ namespace OnlineShopping.Controllers
             Product product = productDal.getProductById(id);
             CatalogueDAL catalogueDal = new CatalogueDAL();
             Catalogue catalogue = catalogueDal.getCatalogueById(product.Catalogue_ID);
-            catalogueDal.getAllProductsByCatalogue(catalogue);
+            catalogueDal.getProductsByCatalogue(catalogue, 8);
             List<Catalogue> catalogues = catalogueDal.getAllCatalogues();
             
             ProductDetailsModel productDetails = new ProductDetailsModel

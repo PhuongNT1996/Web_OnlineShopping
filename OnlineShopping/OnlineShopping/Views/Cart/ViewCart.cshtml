@@ -15,7 +15,8 @@
     User_Account userAccount = (User_Account)Session["USER"];
     if (userAccount != null)
     {
-        cartItems = userAccount.Product_Cart.ToList<Product_Cart>();
+        Product_CartDAL productCartDal = new Product_CartDAL();
+        cartItems = productCartDal.getProductCartsByEmail(userAccount.Email);
     }
     float totalPrice = 0;
 }
@@ -39,7 +40,7 @@ else
                 </div>
                 <div class="item-name">
                     <p>
-                        Your Cart (10 Products)
+                        Product Name
                     </p>
                 </div>
                 <div class="item-price">
@@ -76,7 +77,7 @@ else
                 </div>
                 <div class="item-price">
                     <p>
-                        @item.Product.Price
+                        @item.Product.RealPrice $
                     </p>
                 </div>
                 <div class="item-quantity">
@@ -86,8 +87,8 @@ else
                 </div>
                 <div class="item-total-price">
                     <p>
-                        @(item.Quantity * item.Product.Price)
-                        @{ totalPrice += (float)(item.Quantity * item.Product.Price);}
+                        @(item.Quantity * item.Product.RealPrice) $
+                        @{ totalPrice += (float)(item.Quantity * item.Product.RealPrice);}
                     </p>
                 </div>
 
@@ -95,7 +96,7 @@ else
                     @using (Html.BeginForm("Delete", "Cart"))
                     {
                         <input type="hidden" value="@item.Product_ID" name="productId" />
-                            <button type="submit">Delete</button>
+                        <button type="submit">Delete</button>
                     }
                 </div>
             </div>

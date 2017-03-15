@@ -18,6 +18,7 @@ namespace Model.DAL
             List<Product> products = new List<Product>();
             String sql = " SELECT TOP 4 *"
                 + " FROM Product"
+                + " WHERE Products_Available > 0 AND (Is_Sale = 'TRUE')"
                 + " ORDER BY Created_Date DESC";
             try
             {
@@ -42,9 +43,10 @@ namespace Model.DAL
                         Tax_Percent = reader.GetFloat(13),
                         Manufacturer = reader.GetString(14),
                     };
-
+                    getAllPromotions(product);
                     products.Add(product);
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -52,6 +54,7 @@ namespace Model.DAL
             }
             return products;
         }
+        
         public List<Product> getAllNewProduct()
         {
             //GET top 50 new product in 1 month
@@ -59,7 +62,7 @@ namespace Model.DAL
             List<Product> products = new List<Product>();
             String sql = " SELECT TOP 50 *"
                 + " FROM Product"
-                + " WHERE Created_Date < DATEADD(month, -1, GETDATE())"
+                + " WHERE Created_Date < DATEADD(month, -1, GETDATE()) AND Products_Available > 0 AND (Is_Sale = 'TRUE')"
                 + " ORDER BY Created_Date DESC";
             try
             {
@@ -84,9 +87,10 @@ namespace Model.DAL
                         Tax_Percent = reader.GetFloat(13),
                         Manufacturer = reader.GetString(14),
                     };
-
+                    getAllPromotions(product);
                     products.Add(product);
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -102,6 +106,7 @@ namespace Model.DAL
             List<Product> products = new List<Product>();
             String sql = " SELECT TOP 4 *"
                 + " FROM Product"
+                + " WHERE Products_Available > 0 AND (Is_Sale = 'TRUE')"
                 + " ORDER BY Level_Trending DESC";
             try
             {
@@ -126,9 +131,10 @@ namespace Model.DAL
                         Tax_Percent = reader.GetFloat(13),
                         Manufacturer = reader.GetString(14),
                     };
-
+                    getAllPromotions(product);
                     products.Add(product);
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -144,7 +150,7 @@ namespace Model.DAL
             List<Product> products = new List<Product>();
             String sql = " SELECT TOP 50 *"
                 + " FROM Product"
-                + " WHERE Level_Trending BETWEEN 1 AND 5"
+                + " WHERE (Level_Trending BETWEEN 1 AND 5) AND Products_Available > 0 AND (Is_Sale = 'TRUE')"
                 + " ORDER BY Level_Trending DESC";
             try
             {
@@ -169,9 +175,10 @@ namespace Model.DAL
                         Tax_Percent = reader.GetFloat(13),
                         Manufacturer = reader.GetString(14),
                     };
-
+                    getAllPromotions(product);
                     products.Add(product);
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -186,6 +193,7 @@ namespace Model.DAL
             List<Product> products = new List<Product>();
             String sql = " SELECT TOP 4 *"
                 + " FROM Product"
+                + " WHERE (Products_Available > 0) AND (Is_Sale = 'TRUE')"
                 + " ORDER BY Total_Sold DESC";
             try
             {
@@ -210,9 +218,10 @@ namespace Model.DAL
                         Tax_Percent = reader.GetFloat(13),
                         Manufacturer = reader.GetString(14),
                     };
-
+                    getAllPromotions(product);
                     products.Add(product);
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -228,6 +237,7 @@ namespace Model.DAL
             List<Product> products = new List<Product>();
             String sql = " SELECT TOP 50 *"
                 + " FROM Product"
+                + " WHERE (Products_Available > 0) AND (Is_Sale = 'TRUE')"
                 + " ORDER BY Total_Sold DESC";
             try
             {
@@ -252,9 +262,10 @@ namespace Model.DAL
                         Tax_Percent = reader.GetFloat(13),
                         Manufacturer = reader.GetString(14),
                     };
-
+                    getAllPromotions(product);
                     products.Add(product);
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -292,8 +303,10 @@ namespace Model.DAL
                         Tax_Percent = reader.GetFloat(13),
                         Manufacturer = reader.GetString(14),
                     };
+                    getAllPromotions(result);
                     return result;
                 }
+                reader.Close();
             }
             catch (SqlException ex)
             {
@@ -329,14 +342,39 @@ namespace Model.DAL
                         Tax_Percent = reader.GetFloat(13),
                         Manufacturer = reader.GetString(14),
                     };
+                    getAllPromotions(product);
                     products.Add(product);
                 }
+                reader.Close();
                 return products;
             }
             catch (SqlException ex)
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public void getAllPromotions(Product product)
+        {
+            string sql = "SELECT *"
+                + " FROM Promotion"
+                + " WHERE (Product_ID = N'" + product.Product_ID + "') AND (GETDATE() BETWEEN From_Date AND To_Date) AND (Enable = 'TRUE')";
+            SqlDataReader reader = DataProvider.ExecuteQueryWithDataReader(sql, CommandType.Text);
+            while (reader.Read())
+            {
+                Promotion promotion = new Promotion()
+                {
+                    Promotion_ID = reader.GetInt32(0),
+                    Product_ID = reader.GetInt32(1),
+                    Promotion_Description = reader.GetString(2),
+                    Discount_Percent = reader.GetInt32(3),
+                    From_Date = reader.GetDateTime(4),
+                    To_Date = reader.GetDateTime(5),
+                    Enable = reader.GetBoolean(6),
+                };
+                product.Promotions.Add(promotion);
+            }
+            reader.Close();     
         }
     }
 }

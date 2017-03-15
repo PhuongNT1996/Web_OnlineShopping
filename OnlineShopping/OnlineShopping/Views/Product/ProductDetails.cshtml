@@ -4,18 +4,18 @@
 <link rel="stylesheet" href="~/Content/MyTemplate/css/global.css">
 <script src="~/Content/MyTemplate/js/slides.min.jquery.js"></script>
 <script>
-		$(function(){
-			$('#products').slides({
-				preload: true,
-				preloadImage: 'img/loading.gif',
-				effect: 'slide, fade',
-				crossfade: true,
-				slideSpeed: 350,
-				fadeSpeed: 500,
-				generateNextPrev: true,
-				generatePagination: false
-			});
-		});
+    $(function(){
+        $('#products').slides({
+            preload: true,
+            preloadImage: 'img/loading.gif',
+            effect: 'slide, fade',
+            crossfade: true,
+            slideSpeed: 350,
+            fadeSpeed: 500,
+            generateNextPrev: true,
+            generatePagination: false
+        });
+    });
 </script>
 @{
     ViewBag.Title = "ProductDetails";
@@ -26,8 +26,8 @@
 </div>
 @*PRODUCT DETAILS*@
 
-@{ 
-    Model.Models.Product currentProduct = Model.ProductDetails;    
+@{
+    Model.Models.Product currentProduct = Model.ProductDetails;
 }
 <div class="main">
     <div class="content" style="padding-bottom:0px; padding-top: 0px;">
@@ -75,69 +75,76 @@
                         </div>
                     </div>
                     <div class="desc span_3_of_2">
-                        <h2 style="padding-left:100px">@currentProduct.Product_Name</h2>
-                        <p></p>
-                        <div class="price" style="padding-left:100px">
-                            <p>Price: <span>$@currentProduct.Price</span></p>
-                        </div>
-                        @*
-                            <div class="available">
-                                 <p>Available Options :</p>
-                                 <ul>
-                                     <li>
-                                         Color:
-                                         <select>
-                                             <option>Silver</option>
-                                             <option>Black</option>
-                                             <option>Dark Black</option>
-                                             <option>Red</option>
-                                         </select>
-                                     </li>
-                                     <li>
-                                         Size:<select>
-                                             <option>Large</option>
-                                             <option>Medium</option>
-                                             <option>small</option>
-                                             <option>Large</option>
-                                             <option>small</option>
-                                         </select>
-                                     </li>
-                                     <li>
-                                         Quality:<select>
-                                             <option>1</option>
-                                             <option>2</option>
-                                             <option>3</option>
-                                             <option>4</option>
-                                             <option>5</option>
-                                         </select>
-                                     </li>
-                                 </ul>
-                             </div> *@
+                        <h2 style="text-align:center; font-size: 16pt">
+                            @currentProduct.Product_Name
+                        </h2>
+                        <div class="price">
+                            <p>
+                                Price:
+                                <span>
+                                    @currentProduct.RealPrice$
+                                </span>
+                                @if (currentProduct.DiscountPercent > 0)
+                                {
+                                    <strike>Old Price: @currentProduct.Price$</strike>
 
-                       @using (Html.BeginForm("Add", "Cart"))
-                       {
-                        <div class="share-desc">
-                            <div class="share">
-                                <p>Share Product :</p>
-                                <ul>
-                                    <li><a href="#"><img src="~/Content/MyTemplate/images/facebook.png" alt="" /></a></li>
-                                    <li><a href="#"><img src="~/Content/MyTemplate/images/twitter.png" alt="" /></a></li>
-                                    <li>
-                                        <input type="number" name="myNumber" style="width: 50px; height:30px; text-align:center" value="1" min="1" max="100" autofocus />
-                                        <input type="hidden" name="productId" value="@currentProduct.Product_ID"/>
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <div class="button" style="background-color:white;"><span><button type="submit">Add to Cart</button></span></div>
-                            <div class="clear"></div>
+                                }
+                            </p>
                         </div>
-                       }
-                        <div class="wish-list">
-                            <ul>
-                                <li class="wish"><a href="#">Add to Wishlist</a></li>
-                                <li class="compare"><a href="#">Add to Compare</a></li>
-                            </ul>
+                        @if ((currentProduct.Products_Available > 0) && (currentProduct.Is_Sale))
+                        {
+                        <div class="quantity-add-cart">
+                            @using (Html.BeginForm("Add", "Cart"))
+                            {
+                                <div>
+                                    Quantity: <input type="hidden" name="productId" value="@currentProduct.Product_ID" />
+                                    <input type="number" name="myNumber" style="width: 70px; height:37px; text-align:center" value="1" min="1" max="100" autofocus />
+                                </div>
+
+                                <div class="button-add">
+                                    <span><button type="submit">Add to Cart</button></span>
+                                </div>
+
+                            }
+                            @if (Session["ADD_ERROR"] != null)
+                            {
+                                <div class="add-error">
+                                    <p>
+                                        @Session["ADD_ERROR"]
+                                    </p>
+                                </div>
+                                Session["ADD_ERROR"] = null;
+                            }
+                        </div>
+                        }
+                        else
+                        {
+                            <p style="width: 100%; text-align:center; font-weight: bold; color: red; font-size: 14pt;">
+                                this product is not available or sold out
+                            </p>
+                        }
+
+                        <div class="promotion-description">
+                            <h2>
+                                Promotion:
+                                @if (currentProduct.DiscountPercent > 0)
+                                {
+                                    <span style="text-transform:none">(Discount: @currentProduct.DiscountPercent%)</span>
+                                }
+                            </h2>
+                            @{ bool hasPromotions = false;}
+                            @foreach (var item in currentProduct.Promotions)
+                            {
+                                if (item.Promotion_Description != null)
+                                {
+                                    <p>- @item.Promotion_Description</p>
+                                    hasPromotions = true;
+                                }
+                            }
+                            @if (!hasPromotions)
+                            {
+                                <p>This Product has no promotions</p>
+                            }
                         </div>
                     </div>
                     <div class="clear"></div>
@@ -146,63 +153,27 @@
                     <div id="horizontalTab">
                         <ul class="resp-tabs-list">
                             <li>Product Details</li>
-                            <li>product Tags</li>
-                            <li>Product Reviews</li>
+                            <li>Product Guarantee</li>
                             <div class="clear"></div>
                         </ul>
                         <div class="resp-tabs-container">
                             <div class="product-desc">
                                 @Html.Raw(currentProduct.Description)
                             </div>
-                            <div class="product-tags">
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                                <h4>Add Your Tags:</h4>
-                                <div class="input-box">
-                                    <input type="text" value="">
-                                </div>
-                                <div class="button"><span><a href="#">Add Tags</a></span></div>
-                            </div>
                             <div class="review">
-                                <h4>Lorem ipsum Review by <a href="#">Finibus Bonorum</a></h4>
-                                <ul>
-                                    <li>Price :<a href="#"><img src="~/Content/MyTemplate/images/price-rating.png" alt="" /></a></li>
-                                    <li>Value :<a href="#"><img src="~/Content/MyTemplate/images/value-rating.png" alt="" /></a></li>
-                                    <li>Quality :<a href="#"><img src="~/Content/MyTemplate/images/quality-rating.png" alt="" /></a></li>
-                                </ul>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-                                <div class="your-review">
-                                    <h3>How Do You Rate This Product?</h3>
-                                    <p>Write Your Own Review?</p>
-                                    <form>
-                                        <div>
-                                            <span><label>Nickname<span class="red">*</span></label></span>
-                                            <span><input type="text" value=""></span>
-                                        </div>
-                                        <div>
-                                            <span><label>Summary of Your Review<span class="red">*</span></label></span>
-                                            <span><input type="text" value=""></span>
-                                        </div>
-                                        <div>
-                                            <span><label>Review<span class="red">*</span></label></span>
-                                            <span><textarea> </textarea></span>
-                                        </div>
-                                        <div>
-                                            <span><input type="submit" value="SUBMIT REVIEW"></span>
-                                        </div>
-                                    </form>
-                                </div>
+                                @Html.Raw(currentProduct.Guarantee_Description)
                             </div>
                         </div>
                     </div>
                 </div>
                 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#horizontalTab').easyResponsiveTabs({
-            type: 'default', //Types: default, vertical, accordion
-            width: 'auto', //auto or any width like 600px
-            fit: true   // 100% fit in a container
-        });
-    });
+                    $(document).ready(function () {
+                        $('#horizontalTab').easyResponsiveTabs({
+                            type: 'default', //Types: default, vertical, accordion
+                            width: 'auto', //auto or any width like 600px
+                            fit: true   // 100% fit in a container
+                        });
+                    });
                 </script>
 
             </div>
@@ -306,7 +277,7 @@
                         <p><span class="rupees">@product.Price</span></p>
                     </div>
                     <div class="add-cart">
-                        <h4><a href="preview.html">Add to Cart</a></h4>
+                        <h4>@Html.ActionLink("Add to Cart", "ProductDetails", "Product", new { productIDStr = @product.Product_ID + "" }, null)</h4>
                     </div>
                     <div class="clear"></div>
                 </div>

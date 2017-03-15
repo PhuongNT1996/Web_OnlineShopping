@@ -63,6 +63,47 @@ namespace Model.DAL
                         Tax_Percent = reader.GetFloat(13),
                         Manufacturer = reader.GetString(14),
                     };
+                    ProductDAL productDal = new ProductDAL();
+                    productDal.getAllPromotions(product);
+                    catalogue.Products.Add(product);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void getProductsByCatalogue(Catalogue catalogue, int quantity)
+        {
+            String sql = "SELECT TOP " + quantity + "*"
+                + " FROM Product"
+                + " WHERE Catalogue_ID = " + catalogue.Catalogue_ID;
+            try
+            {
+                SqlDataReader reader = DataProvider.ExecuteQueryWithDataReader(sql, CommandType.Text);
+                while (reader.Read())
+                {
+                    Product product = new Product
+                    {
+                        Product_ID = reader.GetInt32(0),
+                        Catalogue_ID = reader.GetInt32(1),
+                        Is_Sale = reader.GetBoolean(2),
+                        Product_Name = reader.GetString(3),
+                        Price = reader.GetFloat(4),
+                        Level_Trending = reader.GetInt32(5),
+                        Description = reader.GetString(6),
+                        Products_Available = reader.GetInt32(7),
+                        Total_Sold = reader.GetInt32(8),
+                        Created_Date = reader.GetDateTime(9),
+                        Created_Username = reader.GetString(10),
+                        Guarantee_Description = reader.GetString(11),
+                        Title_Image = reader.GetString(12),
+                        Tax_Percent = reader.GetFloat(13),
+                        Manufacturer = reader.GetString(14),
+                    };
+                    ProductDAL productDal = new ProductDAL();
+                    productDal.getAllPromotions(product);
                     catalogue.Products.Add(product);
                 }
             }

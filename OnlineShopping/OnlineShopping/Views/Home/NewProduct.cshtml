@@ -33,13 +33,34 @@
                     <h2>@product.Product_Name</h2> <img src="" />
                     <div class="price-details">
                         <div class="price-number">
-                            <p><span class="rupees">@product.Price</span></p>
+                            <p>
+                                <span class="rupees">
+                                    @product.RealPrice$
+                                </span>
+                                @if (product.DiscountPercent > 0)
+                                {
+                                    <span class="rupees">
+                                        <strike style="color: #6A82A4; padding-left: 5px">
+                                            @product.Price$
+                                        </strike>
+                                    </span>
+                                }
+                            </p>
                         </div>
                         <div class="add-cart">
-                            <h4><a href="preview.html">Add to Cart</a></h4>
+                            <h4>@Html.ActionLink("Add to Cart", "ProductDetails", "Product", new { productIDStr = @product.Product_ID + "" }, null)</h4>
                         </div>
                         <div class="clear"></div>
                     </div>
+
+                    @if (product.Products_Available <= 0)
+                    {
+                        <div class="sold-out">
+                            <a href="@Url.Action("ProductDetails", "Product", new { productIDStr = @product.Product_ID + "" })">
+                                <img src="~/Image/soldout.png" />
+                            </a>
+                        </div>
+                    }
 
                 </div>
             }

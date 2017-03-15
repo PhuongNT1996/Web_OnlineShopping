@@ -36,19 +36,21 @@ namespace DemoEntity.DataProvider
         {
             SqlDataReader rd = null;
             SqlConnection cnn = new SqlConnection(getConnectionString());
-            SqlCommand cmd = new SqlCommand(strSQL, cnn);
-            cmd.CommandType = cmdType;
-            cmd.Parameters.AddRange(param);
-            try
+            using (SqlCommand cmd = new SqlCommand(strSQL, cnn))
             {
-                cnn.Open();
-                rd = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                cmd.CommandType = cmdType;
+                cmd.Parameters.AddRange(param);
+                try
+                {
+                    cnn.Open();
+                    rd = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error : " + ex.Message);
+                }
+                return rd;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error : " + ex.Message);
-            }
-            return rd;
         }
         //ExecuteNonQuery
         public static bool ExecuteNonQuery(string strSQL,
