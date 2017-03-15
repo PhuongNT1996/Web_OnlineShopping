@@ -76,5 +76,30 @@ namespace DemoEntity.DataProvider
             }
             return result;
         }
+
+        public static int ExecuteScalarQuery(string strSQL,
+            CommandType cmdType, params SqlParameter[] paramList)
+        {
+            int result = -1;
+            SqlConnection cnn = new SqlConnection(getConnectionString());
+            SqlCommand cmd = new SqlCommand(strSQL, cnn);
+            cmd.CommandType = cmdType;
+            cmd.Parameters.AddRange(paramList);
+            try
+            {
+                cnn.Open();
+                result = (int)cmd.ExecuteScalar();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error : " + ex.Message);
+            }
+            finally
+            {
+                cnn.Close();
+            }
+            return result;
+        }
     }
 }

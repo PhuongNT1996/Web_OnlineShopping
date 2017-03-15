@@ -12,9 +12,10 @@ namespace Model.DAL
 {
     public class OrderDetailsDAL
     {
-        public bool addOrder(Order_Details order)
+        public int addOrder(Order_Details order)
         {
-            string sql = "INSERT Order_Details VALUES(@Email, @Ordered_Date, @Delivered, @Cancelled_Order, @Reason_Cancel, @Order_Name, @Exact_Address, @Order_Phone, @Province_ID, @District_ID, @Town_ID)";
+            string sql = "INSERT Order_Details OUTPUT Inserted.Order_ID " +
+                "VALUES(@Email, @Ordered_Date, @Delivered, @Cancelled_Order, @Reason_Cancel, @Order_Name, @Exact_Address, @Order_Phone, @Province_ID, @District_ID, @Town_ID)";
             SqlParameter emailParam = new SqlParameter("@Email", order.Email);
             SqlParameter ordereddateParam = new SqlParameter("@Ordered_Date", order.Ordered_Date);
             SqlParameter deliveredParam = new SqlParameter("@Delivered", order.Delivered);
@@ -26,7 +27,7 @@ namespace Model.DAL
             SqlParameter provinceParam = new SqlParameter("@Province_ID", order.Province_ID);
             SqlParameter districtParam = new SqlParameter("@District_ID", order.District_ID);
             SqlParameter townParam = new SqlParameter("@Town_ID", order.Town_ID);
-            bool result = DataProvider.ExecuteNonQuery(sql, CommandType.Text, emailParam, ordereddateParam, deliveredParam, cancelOrderParam,
+            int result = DataProvider.ExecuteScalarQuery(sql, CommandType.Text, emailParam, ordereddateParam, deliveredParam, cancelOrderParam,
                reasonCancelParam, orderNameParam, addressParam, phoneParam, provinceParam, districtParam, townParam);
             return result;
         }

@@ -17,20 +17,14 @@ namespace OnlineShopping.Controllers
         public ActionResult Index(FormCollection f)
         {
             User_Account userAccount = (User_Account)Session["USER"];
-            
+
             if (userAccount == null)
             {
                 return RedirectToAction("Login", "Login");
             }
             else
             {
-                string count = f["countItem"];
-                int countItems = Int32.Parse(count);
-                if (countItems == 0)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                    Province_Bind();
+                Province_Bind();
                 return View();
             }
         }

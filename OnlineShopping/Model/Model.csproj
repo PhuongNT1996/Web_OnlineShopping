@@ -55,6 +55,7 @@
     <Compile Include="DAL\CatalogueDAL.cs" />
     <Compile Include="DAL\OrderDetailsDAL.cs" />
     <Compile Include="DAL\ProductDAL.cs" />
+    <Compile Include="DAL\ProductOrderDetailsDAL.cs" />
     <Compile Include="DAL\Product_CartDAL.cs" />
     <Compile Include="DAL\Province_Town_DistrictDAL.cs" />
     <Compile Include="Models\Catalogue.cs" />

@@ -3,6 +3,7 @@ using Model.Models;
 using Model.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -178,17 +179,27 @@ namespace OnlineShopping.Controllers
                 Town_ID = Int32.Parse(town)
             };
             OrderDetailsDAL dal = new OrderDetailsDAL();
-            bool r = dal.addOrder(order);
-            if(r == true)
-            {
-                Product_CartDAL dalCart = new Product_CartDAL();
-                List<Product_Cart> cartItems = dalCart.getProductCartsByEmail(email);
-                int length = cartItems.Count;             
-                for(int i = 0; i < length; i++)
-                {
-                    dalCart.deleteRecord(cartItems[i].Product_ID, cartItems[i].Email);
-                }
+            int orderDetailsId = dal.addOrder(order);
+            if(orderDetailsId >= 0)
+            {                 
                 ICollection<Product_Cart> productCarts = userAccount.Product_Cart;
+                Product_CartDAL productCartDal = new Product_CartDAL();
+                foreach (var item in productCarts)
+                {
+                    ProductOrderDetailsDAL podDal = new ProductOrderDetailsDAL();
+                    Product_Order_Details pod = new Product_Order_Details()
+                    {
+                        Product_ID = item.Product_ID,
+                        Order_ID = orderDetailsId,
+                        Order_Quantity = (int)item.Quantity,
+                        Price = item.Product.Price,
+                        Discount_Percent = item.Product.DiscountPercent,
+                    };
+
+                    podDal.addProductOrderDetails(pod);
+
+                    productCartDal.deleteRecord(item.Product_ID, userAccount.Email);
+                }
                 productCarts.Clear();
                 Session.Remove("CART");
                 return RedirectToAction("Index", "Congratulate");

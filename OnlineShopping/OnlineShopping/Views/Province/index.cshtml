@@ -76,14 +76,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using Model.Models;
+@using Model.DAL;
 @{
-    List<Product_Cart> cartItems = (List<Product_Cart>)Session["CART"];
     User_Account userAccount = (User_Account)Session["USER"];
+    float totalPrice = 0;
     if (userAccount != null)
     {
-        cartItems = userAccount.Product_Cart.ToList<Product_Cart>();
+        Product_CartDAL productCartDal = new Product_CartDAL();
+        List<Product_Cart> cartItems = productCartDal.getProductCartsByEmail(userAccount.Email);
+        foreach (var item in cartItems)
+        {
+            totalPrice += (float)(item.Quantity * item.Product.RealPrice);
+        }
     }
-    float totalPrice = 0;
 }
 </div>
 <style>
@@ -155,14 +160,14 @@
                             <tr>
                                 <td>Phone Number</td>
                                 <td>
-                                    <input type="text" pattern="\d{10,11}" 
+                                    <input type="text" pattern="\d{10,11}"
                                            oninvalid="setCustomValidity('Invalid Phone Number!!!')"
                                            onchange="try { setCustomValidity('') } catch (e) { }" placeholder="Enter Phone Number" required class="inputTextPass" name="txtNumber" />
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <br />               
+                    <br />
                 </div>
             </div>
         </div>
@@ -179,20 +184,13 @@
                 <div class="info">
                     <table class="table-cart">
                         <tbody>
-                            @{
-                                foreach (Product_Cart item in cartItems)
-                                {                          
-                                            totalPrice += (float)(item.Quantity * item.Product.Price);                                 
-                                                }
-
-                                                <tr>
-                                                    <td style="color:red; font-size:x-large">Total:</td>
-                                                    <td>&nbsp;</td>
-                                                    <td>&nbsp;</td>
-                                                    <td>&nbsp;</td>
-                                                    <td style="color:red; font-size:x-large">@totalPrice $</td>
-                                                </tr>
-                            }
+                            <tr>
+                                <td style="color:red; font-size:x-large">Total:</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td style="color:red; font-size:x-large">@totalPrice $</td>
+                            </tr>
                         </tbody>
                     </table>
                     <div id="divLogin">
@@ -202,4 +200,4 @@
             </div>
         </div>
     </div>
-                                                }
+}

@@ -6,9 +6,6 @@
 
 }
 
-
-
-
 .dropdown-content {
     position: absolute;
     background-color: #f9f9f9;
@@ -61,10 +58,12 @@ td:first-child{
 
 .myTd{
     padding: 20px;
-    text-align: center;
 }
 
-
+.myTdImg{
+    padding: 20px;
+    margin-top: 550px;
+}
 
 fieldset select:first-child{
 	margin-right: 25px;
@@ -118,6 +117,8 @@ td input{
     float: left;
     width: 100%;
     font-size: 25px;
+    width: 70%;
+    font-size: 35px;
     
 }
 
@@ -153,6 +154,7 @@ button {
 
 #divLogin{
 	width: 300px;
+	width: 200px;
 	margin: 0px auto 0px auto;
 }
 #divLogin button{
@@ -186,6 +188,7 @@ button :hover{
 
 /* Center the image and position the close button */
 .div-login{
+	width: 600px;
 	width: 400px;
 	height: 330px;
 	float:left;
@@ -193,26 +196,11 @@ button :hover{
 }
 
 .div-register{
-	padding-left: 95px;
+	padding-left: 75px;
 	width:600px;
 	height:550px;
 	float:left;
 	display:block;
-}
-
-.div-address{
-    width: 600px;
-    height: 330px;
-    float:left;
-    display:block;
-}
-
-.div-total{
-    padding-left: 95px;
-    width:400px;
-    height:550px;
-    float:left;
-    display:block;
 }
 
 .parent-login-register{
