@@ -152,6 +152,10 @@ button {
     width: 100%;
 }
 
+button:hover{
+	background-color: #2d75f9;
+}
+
 #divLogin{
 	width: 300px;
 	width: 200px;

@@ -154,9 +154,15 @@ img{
 	margin-top: 40px;
 }
 .item-conclusion div.item-delete button{
-	background: red;
+	background: red
+}
+.item-conclusion div.item-delete button:hover{
+	background: #d1050c;
 }
 .item-conclusion div.item-image button{
 	background: green;
+}
+.item-conclusion div.item-image button:hover{
+	background: #056100;
 }
 button{ font-family: 'ambleregular';}

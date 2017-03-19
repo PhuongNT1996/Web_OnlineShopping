@@ -29,7 +29,14 @@ namespace Model.Models
         [StringLength(250)]
         public string Product_Name { get; set; }
 
-        public float Price { get; set; }
+        private float price;
+
+        public float Price
+        {
+            get { return (float)Math.Round(price); }
+            set { price = value; }
+        }
+
 
         public int Level_Trending { get; set; }
 
@@ -81,7 +88,7 @@ namespace Model.Models
 
         private float getRealPrice()
         {
-            return (this.Price - (this.Price * this.DiscountPercent / 100));
+            return (float)Math.Round((this.Price - (this.Price * this.DiscountPercent / 100)));
         }
 
         private int discountPercent;

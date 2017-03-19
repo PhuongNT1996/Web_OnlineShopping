@@ -56,19 +56,19 @@
                                 <div id="products">
                                     <div class="slides_container">
                                         <a href="#" target="_blank"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a>
-                                        <a href="#" target="_blank"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a>
-                                        <a href="#" target="_blank"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a>
-                                        <a href="#" target="_blank"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a>
-                                        <a href="#" target="_blank"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a>
-                                        <a href="#" target="_blank"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a>
+                                        @foreach (var item in currentProduct.Images)
+                                        {
+                                            <a href="#" target="_blank"><img src="@Url.Content(item.Url)" alt=" " /></a>
+                                        }
                                     </div>
                                     <ul class="pagination">
                                         <li><a href="#"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a></li>
-                                        <li><a href="#"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a></li>
-                                        <li><a href="#"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a></li>
-                                        <li><a href="#"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a></li>
-                                        <li><a href="#"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a></li>
-                                        <li><a href="#"><img src="@Url.Content(currentProduct.Title_Image)" alt=" " /></a></li>
+                                        @foreach (var item in currentProduct.Images)
+                                        {
+                                            <li>
+                                                <a href="#" target="_blank"><img src="@Url.Content(item.Url)" alt=" " /></a>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </div>

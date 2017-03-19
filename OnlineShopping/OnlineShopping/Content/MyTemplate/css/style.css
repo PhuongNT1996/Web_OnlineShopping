@@ -414,16 +414,10 @@ div.sold-out p{
 	background:#189eff;
 	color: #FFF;
 	text-decoration: none;
-	outline: 0;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
 }
 .add-cart h4 a:hover{
-	  text-shadow: 0px 0px 1px #fb0008;
-	  background:#189eff;
-	  color:#fb0008;
+	  background:#2d75f9;
+	  color:#fff;
 }
 /*** Footer ***/
 .footer {

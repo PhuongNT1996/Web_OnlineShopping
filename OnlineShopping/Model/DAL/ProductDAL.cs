@@ -44,6 +44,7 @@ namespace Model.DAL
                         Manufacturer = reader.GetString(14),
                     };
                     getAllPromotions(product);
+                    getAllImages(product);
                     products.Add(product);
                 }
                 reader.Close();
@@ -88,6 +89,7 @@ namespace Model.DAL
                         Manufacturer = reader.GetString(14),
                     };
                     getAllPromotions(product);
+                    getAllImages(product);
                     products.Add(product);
                 }
                 reader.Close();
@@ -132,6 +134,7 @@ namespace Model.DAL
                         Manufacturer = reader.GetString(14),
                     };
                     getAllPromotions(product);
+                    getAllImages(product);
                     products.Add(product);
                 }
                 reader.Close();
@@ -176,6 +179,7 @@ namespace Model.DAL
                         Manufacturer = reader.GetString(14),
                     };
                     getAllPromotions(product);
+                    getAllImages(product);
                     products.Add(product);
                 }
                 reader.Close();
@@ -219,6 +223,7 @@ namespace Model.DAL
                         Manufacturer = reader.GetString(14),
                     };
                     getAllPromotions(product);
+                    getAllImages(product);
                     products.Add(product);
                 }
                 reader.Close();
@@ -263,6 +268,7 @@ namespace Model.DAL
                         Manufacturer = reader.GetString(14),
                     };
                     getAllPromotions(product);
+                    getAllImages(product);
                     products.Add(product);
                 }
                 reader.Close();
@@ -304,6 +310,7 @@ namespace Model.DAL
                         Manufacturer = reader.GetString(14),
                     };
                     getAllPromotions(result);
+                    getAllImages(result);
                     return result;
                 }
                 reader.Close();
@@ -343,6 +350,7 @@ namespace Model.DAL
                         Manufacturer = reader.GetString(14),
                     };
                     getAllPromotions(product);
+                    getAllImages(product);
                     products.Add(product);
                 }
                 reader.Close();
@@ -375,6 +383,26 @@ namespace Model.DAL
                 product.Promotions.Add(promotion);
             }
             reader.Close();     
+        }
+
+        public void getAllImages(Product product)
+        {
+            string sql = "SELECT *"
+                 + " FROM Image"
+                 + " WHERE Product_ID = N'" + product.Product_ID + "'";
+
+            SqlDataReader reader = DataProvider.ExecuteQueryWithDataReader(sql, CommandType.Text);
+            while (reader.Read())
+            {
+                Image image = new Image()
+                {
+                    Image_ID = reader.GetInt32(0),
+                    Product_ID = reader.GetInt32(1),
+                    Url = reader.GetString(2),
+                };
+                product.Images.Add(image);
+            }
+            reader.Close();
         }
     }
 }

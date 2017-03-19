@@ -76,9 +76,10 @@ namespace Model.DAL
 
         public void getProductsByCatalogue(Catalogue catalogue, int quantity)
         {
-            String sql = "SELECT TOP " + quantity + "*"
+            String sql = "SELECT *"
                 + " FROM Product"
                 + " WHERE Catalogue_ID = " + catalogue.Catalogue_ID;
+            List<Product> products = new List<Product>();
             try
             {
                 SqlDataReader reader = DataProvider.ExecuteQueryWithDataReader(sql, CommandType.Text);
@@ -104,7 +105,17 @@ namespace Model.DAL
                     };
                     ProductDAL productDal = new ProductDAL();
                     productDal.getAllPromotions(product);
-                    catalogue.Products.Add(product);
+                    products.Add(product);
+                }
+                var random = new Random();
+                var shuffledList = products.OrderBy(item => random.Next());
+                int count = 0;
+                foreach (var item in shuffledList)
+                {
+                    catalogue.Products.Add(item);
+                    count++;
+                    if (count >= quantity)
+                        break;
                 }
             }
             catch (SqlException ex)
