@@ -103,6 +103,7 @@ namespace OnlineShopping.Controllers
         public ActionResult Logout()
         {
             Session.Remove("USER");
+            Session.Remove("CART");
             return RedirectToAction("Login", "Login");
         }
     }

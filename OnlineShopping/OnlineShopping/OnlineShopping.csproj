@@ -162,6 +162,7 @@
     <Content Include="Views\Province\index.cshtml" />
     <Content Include="Views\Congratulate\Congratulation.cshtml" />
     <Content Include="Views\Congratulate\Index.cshtml" />
+    <Content Include="Views\Cart\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

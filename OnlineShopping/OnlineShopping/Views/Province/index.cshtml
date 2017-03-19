@@ -1,4 +1,7 @@
 ﻿<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<link href="~/Content/MyTemplate/css/province.css" rel="stylesheet" type="text/css" media="all" />
+
 <script>
 
     $(document).ready(function () {
@@ -100,11 +103,11 @@
 </style>
 @using (Html.BeginForm("Checkout", "Cart"))
 {
-    <div class="parent-login-register">
+    <div class="parent-information">
         <div class="content div-address">
-            <div class="container">
-                <div class="myImage">
-                    <p class="login">Your&nbsp;&nbsp;shipping&nbsp;&nbsp;address</p>
+            <div class="container-information-left">
+                <div class="myImage" style="width: 100%; text-align: center;">
+                    <p class="login">Your shipping address</p>
                 </div>
                 <br />
                 <br />
@@ -172,32 +175,33 @@
             </div>
         </div>
 
-        <div class="content div-total">
-            <div class="container">
-                <div class="myImage">
-                    <p class="login">Your&nbsp;&nbsp;Cart</p>
-                    <hr />
-                </div>
-                <br />
-                <br />
-                <br />
-                <div class="info">
-                    <table class="table-cart">
-                        <tbody>
-                            <tr>
-                                <td style="color:red; font-size:x-large">Total:</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td style="color:red; font-size:x-large">@totalPrice $</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div id="divLogin">
-                        <button type="submit" onclick="return checkIndex()" class="btnRe">CHECKOUT</button><br />
-                    </div>
-                </div>
+        <div class="container-information-right">
+            <div class="myImage">
+                <p class="login" style="width: 300px; text-align: center;">
+                    Your Cart
+                </p>
+            </div>
+            <br />
+            <br />
+            <br />
+            <div class="info">
+                <table class="table-cart">
+                    <tbody>
+                        <tr>
+                            <td style="color:red; font-size:x-large">Total:</td>
+                            <td style="color:red; font-size:x-large; width: 80px;">@totalPrice$</td>
+                            <td style="padding-left: 30px;">
+                                <div id="divLogin">
+                                    <button type="submit" onclick="return checkIndex()" class="btnRe">CHECKOUT</button><br />
+                                </div>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>
+
 }

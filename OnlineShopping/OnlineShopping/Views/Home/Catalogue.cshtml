@@ -72,22 +72,32 @@
                     </div>
                     <div class="clear"></div>
                 </div>
-
-                @if (product.Products_Available <= 0)
+                @if (!product.Is_Sale)
                 {
                     <div class="sold-out">
                         <a href="@Url.Action("ProductDetails", "Product", new { productIDStr = @product.Product_ID + "" })">
-                            <img src="~/Image/soldout.png" />
+                            <img src="~/Image/recall.png" />
                         </a>
                     </div>
                 }
-                @if (product.DiscountPercent > 0)
+                else
                 {
-                    <div class="discount-banner">
-                        <p>
-                            -@product.DiscountPercent%
-                        </p>
-                    </div>
+                    if (product.Products_Available <= 0)
+                    {
+                        <div class="sold-out">
+                            <a href="@Url.Action("ProductDetails", "Product", new { productIDStr = @product.Product_ID + "" })">
+                                <img src="~/Image/soldout.png" />
+                            </a>
+                        </div>
+                    }
+                    if (product.DiscountPercent > 0)
+                    {
+                        <div class="discount-banner">
+                            <p>
+                                -@product.DiscountPercent%
+                            </p>
+                        </div>
+                    }
                 }
             </div>
         }

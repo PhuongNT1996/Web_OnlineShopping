@@ -20,7 +20,7 @@ namespace OnlineShopping.Controllers
 
             if (userAccount == null)
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Login", "Cart");
             }
             else
             {

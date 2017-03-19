@@ -26,6 +26,11 @@
     <p style="font-weight: bold; padding: 50px;">
         Your cart have no items
     </p>
+    <div class="item-conclusion" style="border: none;">
+        <div class="item-image">
+            <button onclick="location.href='@Url.Action("Index", "Home")'">Continue shopping</button>
+        </div>
+    </div>
 }
 else
 {
@@ -65,61 +70,61 @@ else
 
 
             @foreach (Product_Cart item in cartItems)
-            {
-            <div class="item-detail">
-                <div class="item-image">
-                    <img src="@Url.Content(item.Product.Title_Image)" height="100%" />
-                </div>
-                <div class="item-name">
-                    <p>
-                        @item.Product.Product_Name
-                    </p>
-                </div>
-                <div class="item-price">
-                    <p>
-                        @item.Product.RealPrice $
-                    </p>
-                </div>
-                <div class="item-quantity">
-                    <p>
-                        @item.Quantity
-                    </p>
-                </div>
-                <div class="item-total-price">
-                    <p>
-                        @(item.Quantity * item.Product.RealPrice) $
-                        @{ totalPrice += (float)(item.Quantity * item.Product.RealPrice);}
-                    </p>
-                </div>
+                {
+                <div class="item-detail">
+                    <div class="item-image">
+                        <img src="@Url.Content(item.Product.Title_Image)" height="100%" />
+                    </div>
+                    <div class="item-name">
+                        <p>
+                            @item.Product.Product_Name
+                        </p>
+                    </div>
+                    <div class="item-price">
+                        <p>
+                            @item.Product.RealPrice $
+                        </p>
+                    </div>
+                    <div class="item-quantity">
+                        <p>
+                            @item.Quantity
+                        </p>
+                    </div>
+                    <div class="item-total-price">
+                        <p>
+                            @(item.Quantity * item.Product.RealPrice) $
+                            @{ totalPrice += (float)(item.Quantity * item.Product.RealPrice);}
+                        </p>
+                    </div>
 
-                <div class="item-delete">
-                    @using (Html.BeginForm("Delete", "Cart"))
+                    <div class="item-delete">
+                        @using (Html.BeginForm("Delete", "Cart"))
                     {
-                        <input type="hidden" value="@item.Product_ID" name="productId" />
-                        <button type="submit">Delete</button>
-                    }
+                            <input type="hidden" value="@item.Product_ID" name="productId" />
+                                <button type="submit">Delete</button>
+                        }
+                    </div>
                 </div>
-            </div>
-            }           
+                                }
             @*begin list items*@
 
             <div class="item-conclusion">
                 <div class="item-image">
-                        <button onclick="location.href='@Url.Action("Index", "Home")'">Continue shopping</button>
+                    <button onclick="location.href='@Url.Action("Index", "Home")'">Continue shopping</button>
                 </div>
                 <div class="item-name">
                     <p>
-                        
+
                     </p>
                 </div>
                 <div class="item-price">
                     <p>
-                        
+
                     </p>
                 </div>
                 <div class="item-quantity">
                     <p>
-                        
+
                     </p>
                 </div>
                 <div class="item-total-price">
@@ -138,9 +143,9 @@ else
 
         </div>
         @*<div class="checkout-cart">
-            <p>
-                Total Price: @totalPrice $
-            </p>
-        </div>*@
+                <p>
+                    Total Price: @totalPrice $
+                </p>
+            </div>*@
     </div>
-}
+                                }
