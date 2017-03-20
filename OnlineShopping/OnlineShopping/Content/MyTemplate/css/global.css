@@ -56,7 +56,6 @@
 /*****Pagination********/
 
 #products .pagination {
-	background:#dfdfdf;
 	padding:5px;
 	float:left;
 }
@@ -68,7 +67,7 @@
 #products .pagination li a {
 	display:block;
 	width:55px;
-	height:41px;
+	height:55px;
 	margin:1px;
 	float:left;
 	background:#f9f9f9;
@@ -87,8 +86,9 @@
 	}
 	#products .next {
 		left: 243px;
-   }
+	}
 }
+div.slides_container a img{padding-top: 50px;}
 @media only screen and (max-width: 800px) {
 	.slides_container a{
 		width:320px;
