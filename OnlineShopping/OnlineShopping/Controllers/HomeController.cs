@@ -3,6 +3,7 @@ using Model.Models;
 using Model.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,7 +21,7 @@ namespace OnlineShopping.Controllers
             HomeProductsModel homeProduct = new HomeProductsModel();
             ProductDAL productDal = new ProductDAL();
 
-            List<Product> products = productDal.getTopNewProduct();           
+            List<Product> products = productDal.getTopNewProduct();
             homeProduct.NewProducts = products;
 
             products = productDal.getTopTrending();
@@ -77,13 +78,15 @@ namespace OnlineShopping.Controllers
 
         public ActionResult Catalogue(string IDStr)
         {
-            int ID = 1;
-            if (int.TryParse(IDStr, out ID))
+            int id = 1;
+            if (int.TryParse(IDStr, out id))
             {
-                ID = int.Parse(IDStr);
+                id = int.Parse(IDStr);
             }
+            if (id < 1)
+                id = 1;
             CatalogueDAL catalogueDal = new CatalogueDAL();
-            Catalogue catalogue = catalogueDal.getCatalogueById(ID);
+            Catalogue catalogue = catalogueDal.getCatalogueById(id);
 
             catalogueDal.getAllProductsByCatalogue(catalogue);
             return View(catalogue);

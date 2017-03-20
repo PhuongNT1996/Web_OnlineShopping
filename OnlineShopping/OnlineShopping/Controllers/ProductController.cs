@@ -15,10 +15,12 @@ namespace OnlineShopping.Controllers
         public ActionResult ProductDetails(string productIDStr)
         {
             int id = 1;
-            if(int.TryParse(productIDStr, out id))
+            if (int.TryParse(productIDStr, out id))
             {
                 id = int.Parse(productIDStr);
             }
+            if (id < 1)
+                id = 1;
 
             ProductDAL productDal = new ProductDAL();
             Product product = productDal.getProductById(id);
@@ -26,15 +28,15 @@ namespace OnlineShopping.Controllers
             Catalogue catalogue = catalogueDal.getCatalogueById(product.Catalogue_ID);
             catalogueDal.getProductsByCatalogue(catalogue, 8);
             List<Catalogue> catalogues = catalogueDal.getAllCatalogues();
-            
+
             ProductDetailsModel productDetails = new ProductDetailsModel
             {
                 ProductCatalogue = catalogue,
                 ProductDetails = product,
-                Catalogues = catalogues,                
+                Catalogues = catalogues,
             };
-            
-            return View(productDetails);  
+
+            return View(productDetails);
         }
     }
 }
